@@ -6,7 +6,8 @@
 #define RAND_MAX=20;
 
 /*
-Name: Caleb Alves            Date: 12 Sept., 2019
+Name: Caleb Alves, Caleb Honeycutt
+Date: 12 Sept., 2019
 Program: The Dice Game
 
 Description: This program is designed as a console application
@@ -31,7 +32,9 @@ loses that many credits.
 again or quit (unless the user is out of credits, in which case program
 terminates).
 */
-int main()
+
+int funct(int credits);
+int main(void)
 {
     printf("___________Welcome to The Dice Game___________\n");
     printf("\n");
@@ -55,21 +58,74 @@ int main()
     printf("\n");
     printf("Please enter the number of credits you wish to start with...\n");
 
-    int credits, wager, player_roll, comp_roll;
+    int credits, player_roll, comp_roll;
 
     scanf("%d", &credits);
 
-    printf("Nice! You have %d credits\n", &credits);
+    printf("Nice! You have %d credits\n", credits);
     printf("\n");
+while(credits>0)
+{
+    char replay;
+    credits = funct(credits);
+    printf("Now you have %d credits\n", credits);
+    printf("Do you want to play again? Y/N");
+    scanf("%d");
+    if (replay=='Y')
+    {
+        main();
+    }
+    if (replay=='N')
+    {
+        return;
+    }
+}
+return;
+}
+int funct(int credits)
+{
+    int wager;
+    printf("Please place a bet on this roll...\n");
+    scanf("%d", &wager);
+    if(wager>credits)
+    {
+        printf("Not a valid entry");
+        return credits;
+    }
+    srand(NULL);
+    int player_roll=rand();
+    int comp_roll=rand();
+
+    printf("Player roll: %d     ---- Computer roll: %d\n", player_roll, comp_roll);
+    if(player_roll>comp_roll)
+    {
+        printf("You win!");
+        credits=credits+wager;
+        return credits;
+    }
+    else if(comp_roll>player_roll)
+    {
+        printf("You lost!");
+        credits=credits-wager;
+        return credits;
+    }
+return credits;}
+/*while (1)
+{
+
+    char replay = 'y';
+    while (replay = 'y')
+    {
+
     printf("Please place a bet on this roll...\n");
 
     scanf("%d", &wager);
 
-    printf("You bet %d credits on this roll.\n", &wager);
+    printf("You bet %d credits on this roll.\n", wager);
     printf("\n");
     printf("Let's play!\n");
 
-    srand(0);
+    srand(NULL);
     player_roll = rand();
     comp_roll = rand();
 
@@ -77,16 +133,37 @@ int main()
 
     if(player_roll > comp_roll)
     {
+        credits = credits + wager;
+        printf("Play again? Y or N\n");
+        scanf("%c", &replay);
+        printf("You have %d credits\n", credits);
 
     }
 
     if(player_roll < comp_roll)
     {
-
+        credits = credits - wager;
+        //if(credits >= 0){
+         //return;
+        //}
+        printf("Play again? Y or N\n");
+        scanf("%c", &replay);
+        printf("You have %d credits\n", credits);
     }
 
     else
     {
-
+        printf("We tied!  Play again? Y or N\n");
+        scanf("%c", &replay);
     }
+
+    if (replay = 'n')
+    {
+       // return;
+    }
+    }
+
 }
+return;
+}
+*/
