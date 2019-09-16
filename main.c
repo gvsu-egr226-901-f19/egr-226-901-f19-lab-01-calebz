@@ -1,104 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <time.h>
-
-#define RAND_MAX=20
-#define WON 0
-#define LOSE 1
-
-
-int rollDice(void);
-void playGame(int credits, int replay);
-void startGame(void);
-int calculateCredits(int wager, int credits, int computer_roll, int user_roll);
-
-int rollDice(void)
-{
-    return ((rand() % 6) +1);
-}
+#include "StatsLibrary.h"
 
 int main(void)
 {
-    int dice = 0;
-    int result;
-    int credits;
-    int wager;
-    time_t t;
-    int replay;
-    srand(time(&t)); //initializer for the random seed
-    printf("Let's play a dice game!");
-    printf("\n");
-    printf("Would you like to play? 1=Yes, 0=No\n");
-    scanf("%i", &replay);
-    if (replay==0)
+    int c;
+    FILE *f;
+    f=fopen("data.txt", "r");
+    if (f == NULL)
     {
-        printf("Quitter :(");
-        return;
+        printf("Error reading in data.txt");
     }
-    else if (replay==1)
+    for (c= getc(f); c != EOF; c=getc(f))
     {
-        startGame();
+        c=c+1;
     }
-
-}
-
-void startGame(void)
-{
-    printf("Please enter the amount of credits to wager...");
-    int credits;
-    scanf("%i", &credits);
-    int replay;
-    printf("You chose to bet: %d", credits);
-    playGame(credits, replay);
-    return;
-}
-
-void playGame(int credits, int replay)
-{
-    printf("Please enter the amount you would like to wager, must be less than %d", credits);
-    int wager=0;
-    do
+    float nums[c];
+    for (int i=0; i<c; i++)
     {
-        scanf("%d", &wager);
-        if (wager>credits)
-        {
-            wager = 0;
-            printf("You do not have enough credits for that wager, please try again\n");
-        }
-        else if (wager<= credits)
-        {
-            int comp_roll=rollDice();
-            int user_roll=rollDice();
-            printf("I rolled a %d and you rolled a %d\n", comp_roll, user_roll);
-            credits = calculateCredits(credits,wager,comp_roll,user_roll);
-            if (credits>0)
-            {
-                printf("Would you like to play again? 0=No 1=Yes\n");
-                scanf("%d", &replay);
-            }
-            else if (credits<=0)
-            {
-                printf("You lose!!");
-                replay=0;
-            }
-        }
+        fscanf(f,"%d", &nums[i]);
     }
-    while (replay==1);
-    return;
-}
-int calculateCredits(int credits,int wager,int computer_roll,int user_roll)
-{
-    if(computer_roll>user_roll)
-    {
-        printf("You lose! I'll be taking those credits");
-        credits = credits-wager;
-        return(credits);
-    }
-    else if(user_roll>computer_roll)
-    {
-        printf("You win! Dangit!");
-        credits = credits+wager;
-        return(credits);
-    }
+    fclose(f);
+    return 0;
 }
