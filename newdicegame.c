@@ -29,6 +29,22 @@ int main(void)
     srand(time(&t)); //initializer for the random seed
     printf("Let's play a dice game!");
     printf("\n");
+    printf("GAME RULES:\n");
+    printf("\n");
+    printf("> You are playing against the computer (me!). The objective is to roll a higher\n");
+    printf(" integer value than me. I will be rolling a 20-sided die.\n");
+    printf("\n");
+    printf("> You will be asked to place a bet before each roll. This bet must be less than or\n");
+    printf(" equal to the number of credit(s) you have available to you.\n");
+    printf("\n");
+    printf("> If you succeed in rolling higher, then you win! I'll give you credits equal to your \n");
+    printf(" wager.\n");
+    printf("\n");
+    printf("> If I roll higher than you, then I get to keep your credits for myself. Don't worry,\n");
+    printf(" I'll take good care of them until you want to play again.\n");
+    printf("\n");
+    printf("> The game is over when you run out of credits or when you close the console window.\n");
+    printf("\n");
     printf("Would you like to play? 1=Yes, 0=No\n");
     scanf("%i", &replay);
     if (replay==0)
